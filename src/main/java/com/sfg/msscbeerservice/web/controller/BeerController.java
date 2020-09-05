@@ -30,6 +30,7 @@ public class BeerController {
         return new ResponseEntity(HttpStatus.CREATED);
     }
 
+    @PutMapping("/{beerId}")
     public ResponseEntity updateBeer(@PathVariable("beerId") UUID beerId, @RequestBody BeerDto beerDto) {
         log.info("BeerController : updateBeer(-,-) : {0}", beerId);
         //todo: impl
