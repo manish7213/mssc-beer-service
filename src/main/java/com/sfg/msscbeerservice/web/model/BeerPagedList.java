@@ -5,6 +5,10 @@ import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
+/**
+ * @author manish
+ */
+
 public class BeerPagedList extends PageImpl<BeerDto> {
 
     public BeerPagedList(List<BeerDto> content, Pageable pageable, long total) {
