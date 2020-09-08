@@ -4,6 +4,7 @@ import com.sfg.msscbeerservice.web.model.BeerDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -24,14 +25,14 @@ public class BeerController {
     }
 
     @PostMapping
-    public ResponseEntity saveNewBeer(@RequestBody BeerDto beerDto) {
+    public ResponseEntity saveNewBeer(@RequestBody @Validated BeerDto beerDto) {
         log.info("BeerController : saveNewBeer(-) : {0}", beerDto.getId());
         //todo: impl
         return new ResponseEntity(HttpStatus.CREATED);
     }
 
     @PutMapping("/{beerId}")
-    public ResponseEntity updateBeer(@PathVariable("beerId") UUID beerId, @RequestBody BeerDto beerDto) {
+    public ResponseEntity updateBeer(@PathVariable("beerId") UUID beerId, @RequestBody @Validated BeerDto beerDto) {
         log.info("BeerController : updateBeer(-,-) : {0}", beerId);
         //todo: impl
         return new ResponseEntity(HttpStatus.NO_CONTENT);
