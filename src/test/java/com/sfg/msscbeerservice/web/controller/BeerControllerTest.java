@@ -1,11 +1,14 @@
 package com.sfg.msscbeerservice.web.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sfg.msscbeerservice.bootstrap.BeerLoader;
+import com.sfg.msscbeerservice.services.BeerService;
 import com.sfg.msscbeerservice.web.model.BeerDto;
 import com.sfg.msscbeerservice.web.model.BeerStyleEnum;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -28,11 +31,17 @@ class BeerControllerTest {
     MockMvc mockMvc;
     @Autowired
     ObjectMapper objectMapper;
+    @MockBean
+    BeerService beerService;
 
     @Test
     void getBeerById() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/beer/"+ UUID.randomUUID().toString())
-                .accept(MediaType.APPLICATION_JSON))
+        mockMvc
+                .perform(MockMvcRequestBuilders
+                        .get("/api/v1/beer/" + UUID
+                                .randomUUID()
+                                .toString())
+                        .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
     }
 
@@ -42,9 +51,10 @@ class BeerControllerTest {
         BeerDto beerDto = getValidBeerDto();
         String beerDtoJson = objectMapper.writeValueAsString(beerDto);
 
-        mockMvc.perform(post("/api/v1/beer/")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(beerDtoJson))
+        mockMvc
+                .perform(post("/api/v1/beer/")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(beerDtoJson))
                 .andExpect(status().isCreated());
     }
 
@@ -53,18 +63,22 @@ class BeerControllerTest {
         BeerDto beerDto = getValidBeerDto();
         String beerDtoJson = objectMapper.writeValueAsString(beerDto);
 
-        mockMvc.perform(put("/api/v1/beer/" + UUID.randomUUID().toString())
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(beerDtoJson))
+        mockMvc
+                .perform(put("/api/v1/beer/" + UUID
+                        .randomUUID()
+                        .toString())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(beerDtoJson))
                 .andExpect(status().isNoContent());
     }
 
     private BeerDto getValidBeerDto() {
 
-        return BeerDto.builder()
+        return BeerDto
+                .builder()
                 .beerName("My Beer")
                 .beerStyle(BeerStyleEnum.ALE)
-                .upc(1233455L)
+                .upc(BeerLoader.BEER_1_UPC)
                 .price(new BigDecimal("10.50"))
                 .build();
     }

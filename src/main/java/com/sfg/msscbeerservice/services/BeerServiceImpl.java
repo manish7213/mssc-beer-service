@@ -5,12 +5,12 @@ import com.sfg.msscbeerservice.repositories.BeerRepository;
 import com.sfg.msscbeerservice.web.controller.NotFoundException;
 import com.sfg.msscbeerservice.web.mappers.BeerMapper;
 import com.sfg.msscbeerservice.web.model.BeerDto;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Service
 public class BeerServiceImpl implements BeerService {
 
@@ -37,10 +37,10 @@ public class BeerServiceImpl implements BeerService {
         Beer beer = beerRepository
                 .findById(beerId)
                 .orElseThrow(NotFoundException::new);
-        beer.setBeerName(beer.getBeerName());
-        beer.setBeerStyle(beer.getBeerStyle());
-        beer.setPrice(beer.getPrice());
-        beer.setUpc(beer.getUpc());
+        beer.setBeerName(beerDto.getBeerName());
+        beer.setBeerStyle(beerDto.getBeerStyle().name());
+        beer.setPrice(beerDto.getPrice());
+        beer.setUpc(beerDto.getUpc());
 
         return beerMapper.beerToBeerDto(beerRepository.save(beer));
     }
